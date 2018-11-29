@@ -7,7 +7,7 @@
 	<!-- Default Elasticsearch configuration -->
 	<context-param>
 		<param-name>elastic.host</param-name>
-		<param-value>localhost</param-value>
+		<param-value>elasticsearch</param-value>
 	</context-param>
 	<context-param>
 		<param-name>elastic.port</param-name>
@@ -33,5 +33,16 @@
 	<servlet-mapping>
 		<servlet-name>ODataServlet</servlet-name>
 		<url-pattern>/OData.svc/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MSCompatibilityODataServlet</servlet-name>
+		<servlet-class>com.hevelian.olastic.web.MSCompatibilityODataServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MSCompatibilityODataServlet</servlet-name>
+		<url-pattern>/MSCompatOData.svc/*</url-pattern>
 	</servlet-mapping>
 </web-app>
