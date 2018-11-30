@@ -132,10 +132,20 @@ public abstract class AbstractESReadProcessor<T, V> implements ESReadProcessor {
     protected ContextURL createContextUrl(ElasticEdmEntitySet entitySet, boolean isSingleEntity,
             ExpandOption expand, SelectOption select, String navOrPropertyPath)
             throws SerializerException {
+                
+        java.net.URI serviceRootURI = null;
+
+        try {
+            serviceRootURI = this.request != null ? new java.net.URI(request.getRawBaseUri()) : null;
+        } catch (java.net.URISyntaxException e) {
+            serviceRootURI = null;
+        }
+                
         return ContextURL.with().entitySet(entitySet)
                 .selectList(odata.createUriHelper()
                         .buildContextURLSelectList(entitySet.getEntityType(), expand, select))
                 .suffix(isSingleEntity ? Suffix.ENTITY : null).navOrPropertyPath(navOrPropertyPath)
+                .serviceRoot(serviceRootURI)
                 .build();
     }
 }
